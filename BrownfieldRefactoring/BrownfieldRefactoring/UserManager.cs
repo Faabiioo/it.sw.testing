@@ -1,27 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BrownfieldRefactoring
+﻿namespace BrownfieldRefactoring
 {
     class UserManager
     {
-        private Logger logger = new Logger();
-        private DatabaseAccess dbAccess = new DatabaseAccess();
+        private readonly Logger logger = new();
+        private readonly DatabaseAccess dbAccess = new();
 
         public void AddUser(string name, string email)
         {
             // Logik zum Hinzufügen eines Benutzers
             logger.Log($"Adding user {name}");
-            if (dbAccess.SaveUser(name, email))
+
+            var user = new User()
             {
-                logger.Log("SaveUser succeeded!");
+                UserName = name,
+                EMail = email
+            };
+
+            if (user.IsConsistent())
+            {
+                if (dbAccess.SaveUser(user))
+                {
+                    logger.Log("SaveUser succeeded!");
+                }
+                else
+                {
+                    logger.Log("SaveUser failed!");
+                }
             }
             else
             {
-                logger.Log("SaveUser failed!");
+                logger.Log("User data is incosistent, no user saved.");
             }
         }
     }

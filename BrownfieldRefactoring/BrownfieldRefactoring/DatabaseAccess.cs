@@ -1,5 +1,4 @@
-﻿
-namespace BrownfieldRefactoring
+﻿namespace BrownfieldRefactoring
 {
     public class DatabaseAccess
     {
@@ -7,9 +6,9 @@ namespace BrownfieldRefactoring
         {
         }
 
-        public virtual bool SaveUser(string name, string email)
+        public virtual bool SaveUser(User user)
         {
-            Console.WriteLine($"DatabaseAccess: Saving user {name}, {email}");
+            Console.WriteLine($"DatabaseAccess: Saving user {user.UserName}, {user.EMail}");
             return true;
         }
     }
